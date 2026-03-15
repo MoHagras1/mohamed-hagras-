@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>كل سنة وانتي معايا يا حبي S❤️</title>
+    <style>
+        /* تصميم الموقع */
+        body {
+            background-color: #fff0f3;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #d63384;
+            overflow-x: hidden;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            position: relative;
+            z-index: 2;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            animation: heartbeat 1.5s infinite;
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .photo-frame {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin: 20px 0;
+            border: 5px solid #ffeef2;
+        }
+
+        .timer {
+            background: #ff85a1;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+
+        .message {
+            font-style: italic;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        /* قلوب متساقطة في الخلفية */
+        .hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .heart {
+            position: absolute;
+            color: #ffb3c1;
+            font-size: 20px;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            to { transform: translateY(100vh); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="hearts" id="heart-container"></div>
+
+    <div class="card">
+        <h1>كل سنة وانتي طيبه يا حبيبتي  ❤️</h1>
+        
+        <!-- ملاحظة: استبدل photo.jpg بصورتك الشخصية لاحقاً -->
+        <img src="photo.jpg" alt="أجمل ذكرى" class="photo-frame" id="main-img">
+
+        <div class="timer" id="counter">
+            نحن معاً منذ...
+        </div>
+
+        <p class="message">
+            ".صقصف كل يوم معك هو هدية من الله. شكراً لأنك في حياتي، وأتمنى أن نبقى معاً للأبد."
+        </p>
+
+        <!-- استبدل music.mp3 بملفك الصوتي -->
+        <audio id="bg-music" loop>
+            <source src="music.mp3" type="audio/mpeg">
+        </audio>
+        
+        <button onclick="playMusic()" style="background: #d63384; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer;">
+            تشغيل الموسيقى 🎵
+        </button>
+    </div>
+
+    <script>
+        // 1. إعداد تاريخ البداية (سنة، شهر-1، يوم)
+        // مثال: إذا بدأت علاقتكم في 15 يناير 2023، اكتب (2024 7,, 1)
+        const startDate = new Date(2023, 0, 15); 
+
+        function updateTimer() {
+            const now = new Date();
+            const diff = now - startDate;
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            const minutes = Math.floor((diff / 1000 / 60) % 60);
+
+            document.getElementById('counter').innerText = 
+                `نحن معاً منذ ${days} يوم و ${hours} ساعة`;
+        }
+        setInterval(updateTimer, 1000);
+        updateTimer();
+
+        // 2. تشغيل الموسيقى
+        function playMusic() {
+            document.getElementById('bg-music').play();
+        }
+
+        // 3. تأثير القلوب المتساقطة
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 3 + 2 + 's';
+            heart.style.opacity = Math.random();
+            document.getElementById('heart-container').appendChild(heart);
+            setTimeout(() => { heart.remove(); }, 5000);
+        }
+        setInterval(createHeart, 300);
+    </script>
+</body>
+</html>
