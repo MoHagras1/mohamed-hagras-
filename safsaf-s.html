@@ -3,27 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ذكرى حب - صفاء</title>
+    <title>عيد مبارك - صفاء</title>
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root { --bg: #1a0b1e; --accent: #ff4d6d; --text: #fff0f3; }
-        body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Amiri', serif; display: flex; align-items: center; justify-content: center; min-height: 100vh; overflow: hidden; }
-        #lock-screen { position: fixed; inset: 0; background: var(--bg); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 1000; transition: 0.5s; }
-        .box { background: rgba(255,255,255,0.05); padding: 30px; border-radius: 20px; border: 1px solid var(--accent); text-align: center; box-shadow: 0 0 20px rgba(255, 77, 109, 0.2); }
-        input { padding: 12px; border-radius: 10px; border: 1px solid var(--accent); background: #222; color: white; width: 200px; text-align: center; font-size: 18px; margin: 15px 0; outline: none; }
-        .login-btn { background: var(--accent); color: white; border: none; padding: 12px 40px; border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 18px; }
+        :root {
+            --bg: #11051a; /* بنفسجي غامق جداً للخلفيه */
+            --accent: #ff4d6d; /* وردي محمر للعناصر المهمه */
+            --gold: #ffd700; /* ذهبي للفوانيس والزينه */
+            --text: #fff0f3;
+        }
+
+        body {
+            margin: 0; background: var(--bg); color: var(--text);
+            font-family: 'Amiri', serif; display: flex; align-items: center;
+            justify-content: center; min-height: 100vh; overflow: hidden; position: relative;
+        }
+
+        /* شاشة القفل */
+        #lock-screen {
+            position: fixed; inset: 0; background: var(--bg);
+            display: flex; flex-direction: column; align-items: center;
+            justify-content: center; z-index: 1000; transition: 0.5s;
+        }
+        .box {
+            background: rgba(255,255,255,0.05); padding: 30px; border-radius: 20px;
+            border: 1px solid var(--gold); text-align: center;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
+        }
+        input {
+            padding: 12px; border-radius: 10px; border: 1px solid var(--gold);
+            background: #222; color: white; width: 200px; text-align: center;
+            font-size: 18px; margin: 15px 0; outline: none;
+        }
+        .login-btn {
+            background: var(--gold); color: #111; border: none; padding: 12px 40px;
+            border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 18px;
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3); transition: 0.3s;
+        }
+        .login-btn:hover { background: #ffcc00; transform: scale(1.05); }
+
+        /* المحتوى الرئيسي */
         #content { display: none; text-align: center; padding: 20px; z-index: 1; }
-        .photo { max-width: 250px; border-radius: 50%; border: 5px solid var(--accent); margin: 20px 0; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .timer-grid { display: flex; gap: 10px; justify-content: center; margin-top: 20px; }
-        .unit { background: rgba(255,77,109,0.1); padding: 10px; border-radius: 10px; min-width: 65px; border: 1px solid rgba(255,77,109,0.2); }
-        .val { font-size: 24px; font-weight: bold; color: var(--accent); }
+        .main-title { font-size: 45px; margin-bottom: 5px; text-shadow: 0 0 10px rgba(255, 77, 109, 0.5); }
+        .name-highlight { color: var(--accent); }
+        
+        .sub-title {
+            font-size: 28px; color: var(--gold); margin-bottom: 20px; display: block;
+            text-shadow: 0 0 5px rgba(255, 215, 0, 0.3);
+        }
+
+        /* تنسيق الصورة */
+        .photo {
+            max-width: 250px; border-radius: 50%; border: 5px solid rgba(255, 215, 0, 0.3);
+            margin: 20px 0; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        /* تنسيق العداد */
+        .timer-box {
+            background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 215, 0, 0.2);
+            padding: 25px; border-radius: 25px; margin-top: 20px;
+        }
+        .timer-grid { display: flex; gap: 15px; justify-content: center; margin-top: 15px; }
+        .unit {
+            background: rgba(255, 215, 0, 0.05); padding: 10px; border-radius: 15px;
+            min-width: 70px; border: 1px solid rgba(255, 215, 0, 0.1);
+        }
+        .val { font-size: 32px; font-weight: bold; color: var(--gold); }
+
+        /* عناصر زينه رمضان والعيد المتحركه */
+        .celebration-bg { position: absolute; inset: 0; overflow: hidden; z-index: 0; }
+        
+        /* الفوانيس */
+        .lantern {
+            position: absolute; color: var(--gold); font-size: 25px;
+            opacity: 0.7; animation: floatLantern 15s infinite linear;
+        }
+        /* كحك العيد */
+        .kahk {
+            position: absolute; font-size: 20px; opacity: 0.6;
+            animation: floatKahk 12s infinite linear;
+        }
+
+        @keyframes floatLantern {
+            0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.7; }
+            90% { opacity: 0.7; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+
+        @keyframes floatKahk {
+            0% { transform: translateY(110vh) translateX(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.6; }
+            50% { transform: translateY(50vh) translateX(50px) rotate(180deg); }
+            90% { opacity: 0.6; }
+            100% { transform: translateY(-10vh) translateX(-50px) rotate(360deg); opacity: 0; }
+        }
+
     </style>
 </head>
 <body>
 
     <div id="lock-screen">
         <div class="box">
-            <h2 style="color:var(--text)">أدخلي كلمة السر ❤️</h2>
+            <h2 style="margin-top:0; color:var(--gold);">أدخلي كلمة السر ❤️</h2>
             <input type="password" id="passInput" placeholder="2312008">
             <br>
             <button class="login-btn" onclick="check()">دخول</button>
@@ -31,35 +113,42 @@
         </div>
     </div>
 
+    <div class="celebration-bg" id="celebration-bg"></div>
+
     <div id="content">
-        <h1>أجمل أيامي معاكي يا صفصف<span style="color:var(--accent)"></span></h1>
-        <p style="font-size:24px">كل سنة وأنتي عيدي يا حبيبتي 🫂</p>
-        <img src="our-photo.jpg" class="photo" onerror="this.src='https://via.placeholder.com/250?text=Love'">
+        <h1 class="main-title">أجمل حكاية مع <span class="name-highlight">صفاء</span></h1>
+        
+        <span class="sub-title">
+            كل سنة وأنتي عيدي وأجمل أعيادي يا حبيبتي 🫂 Eid Mubarak
+        </span>
+
+        <img src="our-photo.jpg" alt="صورتنا" class="photo" onerror="this.src='https://via.placeholder.com/250?text=Love'">
+        
         <div class="timer-box">
-            <p style="font-size:18px">الوقت اللي عشناه سوا من (1-8-2024):</p>
+            <p style="font-size: 18px;">الوقت الذي عشناه معاً منذ (1-8-2024):</p>
             <div class="timer-grid">
-                <div class="unit"><div class="val" id="d">0</div><div>يوم</div></div>
-                <div class="unit"><div class="val" id="h">0</div><div>ساعة</div></div>
-                <div class="unit"><div class="val" id="m">0</div><div>دقيقة</div></div>
-                <div class="unit"><div class="val" id="s">0</div><div>ثانية</div></div>
+                <div class="unit"><div class="val" id="d">00</div><div class="val-label">يوم</div></div>
+                <div class="unit"><div class="val" id="h">00</div><div class="val-label">ساعة</div></div>
+                <div class="unit"><div class="val" id="m">00</div><div class="val-label">دقيقة</div></div>
+                <div class="unit"><div class="val" id="s">00</div><div class="val-label">ثانية</div></div>
             </div>
         </div>
-        <p style="margin-top:30px; font-size:20px;">أحبكِ دائماً وأبداً ❤</p>
+        <p style="margin-top:40px; font-size:20px; color: var(--gold);">أحبكِ دائماً وأبداً ❤</p>
     </div>
 
     <script>
         function check() {
             const input = document.getElementById('passInput').value.trim();
-            // الكود دلوقتي بيقبل الباسورد الطويل أو القصير
             if (input === "2312008" || input === "2008") {
                 document.getElementById('lock-screen').style.opacity = "0";
                 setTimeout(() => {
                     document.getElementById('lock-screen').style.display = "none";
                     document.getElementById('content').style.display = "block";
+                    startCelebration(); // بدء حركه الفوانيس والكحك بعد الدخول
                 }, 500);
             } else {
                 document.getElementById('err').style.display = "block";
-                document.getElementById('passInput').value = ""; // بيمسح الغلط عشان تكتب من جديد
+                document.getElementById('passInput').value = "";
             }
         }
 
@@ -69,11 +158,42 @@
             const now = new Date().getTime();
             const diff = now - start;
             document.getElementById("d").innerText = Math.floor(diff / 86400000);
-            document.getElementById("h").innerText = Math.floor((diff % 86400000) / 3600000);
-            document.getElementById("m").innerText = Math.floor((diff % 3600000) / 60000);
-            document.getElementById("s").innerText = Math.floor((diff % 60000) / 1000);
+            document.getElementById("h").innerText = Math.floor((diff % 86400000) / 3600000).toString().padStart(2, '0');
+            document.getElementById("m").innerText = Math.floor((diff % 3600000) / 60000).toString().padStart(2, '0');
+            document.getElementById("s").innerText = Math.floor((diff % 60000) / 1000).toString().padStart(2, '0');
         }, 1000);
+
+        // كود إنشاء الفوانيس والكحك المتحرك
+        function startCelebration() {
+            const bg = document.getElementById('celebration-bg');
+            const lanternIcons = ['🏮', '✨', '🌟', '🌙']; // أيقونات الفوانيس والزينه
+            const kahkIcons = ['🍪', '🥯']; // أيقونات تمثل الكحك والبسكويت
+
+            // إنشاء الفوانيس
+            for (let i = 0; i < 20; i++) {
+                createItem(lanternIcons, 'lantern', bg);
+            }
+            // إنشاء الكحك
+            for (let i = 0; i < 15; i++) {
+                createItem(kahkIcons, 'kahk', bg);
+            }
+        }
+
+        function createItem(icons, className, container) {
+            const item = document.createElement('div');
+            item.classList.add(className);
+            item.innerText = icons[Math.floor(Math.random() * icons.length)];
+            item.style.left = Math.random() * 100 + 'vw';
+            item.style.animationDelay = Math.random() * 10 + 's';
+            item.style.animationDuration = (Math.random() * 5 + 10) + 's'; // سرعات مختلفة
+            container.appendChild(item);
+        }
+
+        // إتاحة الدخول عبر زر Enter
+        document.getElementById("passInput").addEventListener("keyup", function(event) {
+            if (event.key === "Enter") { check(); }
+        });
     </script>
 </body>
 </html>
- 
+
