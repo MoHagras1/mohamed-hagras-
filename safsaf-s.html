@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>عيد مبارك - صفاء</title>
+    <title>عيد مبارك - صفصف</title>
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg: #11051a; /* بنفسجي غامق جداً للخلفيه */
             --accent: #ff4d6d; /* وردي محمر للعناصر المهمه */
-            --gold: #ffd700; /* ذهبي للفوانيس والزينه */
+            --gold: #ffd700; /* ذهبي لللمسات الاحتفالية */
             --text: #fff0f3;
         }
 
@@ -70,33 +70,19 @@
         }
         .val { font-size: 32px; font-weight: bold; color: var(--gold); }
 
-        /* عناصر زينه رمضان والعيد المتحركه */
+        /* عناصر الخلفيه المتحركه (البالونات والدباديب وكحك العيد) */
         .celebration-bg { position: absolute; inset: 0; overflow: hidden; z-index: 0; }
         
-        /* الفوانيس */
-        .lantern {
-            position: absolute; color: var(--gold); font-size: 25px;
-            opacity: 0.7; animation: floatLantern 15s infinite linear;
-        }
-        /* كحك العيد */
-        .kahk {
-            position: absolute; font-size: 20px; opacity: 0.6;
-            animation: floatKahk 12s infinite linear;
+        .floating-item {
+            position: absolute; opacity: 0.7; animation: floatUp 15s infinite linear;
         }
 
-        @keyframes floatLantern {
-            0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.7; }
-            90% { opacity: 0.7; }
-            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
-        }
-
-        @keyframes floatKahk {
+        @keyframes floatUp {
             0% { transform: translateY(110vh) translateX(0) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.6; }
-            50% { transform: translateY(50vh) translateX(50px) rotate(180deg); }
-            90% { opacity: 0.6; }
-            100% { transform: translateY(-10vh) translateX(-50px) rotate(360deg); opacity: 0; }
+            10% { opacity: 0.7; }
+            50% { transform: translateY(50vh) translateX(40px) rotate(180deg); }
+            90% { opacity: 0.7; }
+            100% { transform: translateY(-10vh) translateX(-40px) rotate(360deg); opacity: 0; }
         }
 
     </style>
@@ -116,16 +102,16 @@
     <div class="celebration-bg" id="celebration-bg"></div>
 
     <div id="content">
-        <h1 class="main-title">أجمل حكاية مع <span class="name-highlight">صفاء</span></h1>
+        <h1 class="main-title">أجمل أيامي معاكي يا <span class="name-highlight">صفصف</span></h1>
         
         <span class="sub-title">
-            كل سنة وأنتي عيدي وأجمل أعيادي يا حبيبتي 🫂 Eid Mubarak
+            كل سنة وأنتي عيدي وأجمل أعيادي 🫂
         </span>
 
         <img src="our-photo.jpg" alt="صورتنا" class="photo" onerror="this.src='https://via.placeholder.com/250?text=Love'">
         
         <div class="timer-box">
-            <p style="font-size: 18px;">الوقت الذي عشناه معاً منذ (1-8-2024):</p>
+            <p style="font-size: 18px;">الوقت اللي عشناه سوا من (1-8-2024):</p>
             <div class="timer-grid">
                 <div class="unit"><div class="val" id="d">00</div><div class="val-label">يوم</div></div>
                 <div class="unit"><div class="val" id="h">00</div><div class="val-label">ساعة</div></div>
@@ -144,7 +130,7 @@
                 setTimeout(() => {
                     document.getElementById('lock-screen').style.display = "none";
                     document.getElementById('content').style.display = "block";
-                    startCelebration(); // بدء حركه الفوانيس والكحك بعد الدخول
+                    startCelebration(); // بدء حركه الخلفيه بعد الدخول
                 }, 500);
             } else {
                 document.getElementById('err').style.display = "block";
@@ -163,30 +149,39 @@
             document.getElementById("s").innerText = Math.floor((diff % 60000) / 1000).toString().padStart(2, '0');
         }, 1000);
 
-        // كود إنشاء الفوانيس والكحك المتحرك
+        // كود إنشاء عناصر الخلفيه المتحركه (البالونات والدباديب وكحك العيد)
         function startCelebration() {
             const bg = document.getElementById('celebration-bg');
-            const lanternIcons = ['🏮', '✨', '🌟', '🌙']; // أيقونات الفوانيس والزينه
-            const kahkIcons = ['🍪', '🥯']; // أيقونات تمثل الكحك والبسكويت
+            
+            // قائمه الأيقونات (البالونات، الدباديب، كحك العيد)
+            const icons = [
+                '🧸', // دبدوب
+                '🎈', // بالون ملون
+                '🍪', // كحك العيد/بسكويت
+                '🥯', // خبز العيد/بسكويت إضافي
+                '🎁', // صندوق هدايا لزيادة البهجة
+            ];
 
-            // إنشاء الفوانيس
-            for (let i = 0; i < 20; i++) {
-                createItem(lanternIcons, 'lantern', bg);
-            }
-            // إنشاء الكحك
-            for (let i = 0; i < 15; i++) {
-                createItem(kahkIcons, 'kahk', bg);
-            }
-        }
+            const numberOfItems = 50; // إجمالي عدد العناصر في الخلفيه
 
-        function createItem(icons, className, container) {
-            const item = document.createElement('div');
-            item.classList.add(className);
-            item.innerText = icons[Math.floor(Math.random() * icons.length)];
-            item.style.left = Math.random() * 100 + 'vw';
-            item.style.animationDelay = Math.random() * 10 + 's';
-            item.style.animationDuration = (Math.random() * 5 + 10) + 's'; // سرعات مختلفة
-            container.appendChild(item);
+            for (let i = 0; i < numberOfItems; i++) {
+                const item = document.createElement('div');
+                item.classList.add('floating-item');
+                
+                // اختيار أيقونة عشوائية
+                item.innerText = icons[Math.floor(Math.random() * icons.length)];
+                
+                // إعدادات حركه عشوائية
+                item.style.left = Math.random() * 100 + 'vw';
+                item.style.animationDelay = Math.random() * 15 + 's'; // تأخير عشوائي
+                item.style.animationDuration = (Math.random() * 10 + 10) + 's'; // سرعة عشوائية
+                
+                // حجم عشوائي (عشان العناصر تبان طبيعية)
+                const scale = Math.random() * 0.8 + 0.6; // حجم بين 0.6 و 1.4
+                item.style.fontSize = (scale * 28) + 'px';
+
+                bg.appendChild(item);
+            }
         }
 
         // إتاحة الدخول عبر زر Enter
@@ -196,4 +191,3 @@
     </script>
 </body>
 </html>
-
